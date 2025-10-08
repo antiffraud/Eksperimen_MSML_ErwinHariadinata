@@ -6,7 +6,7 @@ on:
       - main
 
 permissions:
-  contents: write  # agar bisa push hasil update dataset
+  contents: write 
 
 jobs:
   run-preprocessing:
