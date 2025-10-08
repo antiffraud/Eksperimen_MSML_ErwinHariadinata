@@ -31,6 +31,11 @@ jobs:
           cd preprocessing
           python automate_Muhamad\ Erwin\ Hariadinata.py
 
+      - name: Check generated files
+        run: |
+          echo "=== Files inside preprocessing ==="
+          ls -lh preprocessing
+
       - name: Commit and push updated dataset
         env:
           GIT_USERNAME: ${{ secrets.USERNAME }}
@@ -39,10 +44,14 @@ jobs:
           git config user.name "${GIT_USERNAME}"
           git config user.email "${GIT_EMAIL}"
 
-          git add preprocessing/*
+          echo "=== Git status before commit ==="
+          git status
 
+          echo "=== Git diff ==="
+          git diff --stat preprocessing/final_weather_data.csv || echo "No diff detected"
+
+          git add preprocessing/final_weather_data.csv
           git commit -m "Auto update preprocessing results [skip ci]" || echo "No changes to commit"
 
           git pull --rebase origin main || echo "Rebase failed or nothing to update"
-
           git push || echo "No new commits to push"
