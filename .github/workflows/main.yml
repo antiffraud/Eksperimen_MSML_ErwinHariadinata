@@ -36,8 +36,8 @@ jobs:
           GIT_USER_NAME: ${{ secrets.USERNAME }}
           GIT_USER_EMAIL: ${{ secrets.EMAIL }}
         run: |
-          git config user.name "${GIT_USER_NAME}"
-          git config user.email "${GIT_USER_EMAIL}"
+          git config user.name "${GIT_USERNAME}"
+          git config user.email "${GIT_EMAIL}"
 
           git add preprocessing/*
 
