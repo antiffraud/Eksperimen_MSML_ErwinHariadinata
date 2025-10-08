@@ -6,7 +6,7 @@ on:
       - main
 
 permissions:
-  contents: write 
+  contents: write
 
 jobs:
   run-preprocessing:
@@ -33,14 +33,16 @@ jobs:
 
       - name: Commit and push updated dataset
         env:
-          GIT_USER_NAME: ${{ secrets.GIT_USER_NAME }}
-          GIT_USER_EMAIL: ${{ secrets.GIT_USER_EMAIL }}
+          GIT_USER_NAME: ${{ secrets.USERNAME }}
+          GIT_USER_EMAIL: ${{ secrets.EMAIL }}
         run: |
-          git config --global user.name ${{ secrets.username }}
-          git config --global user.email ${{ secrets.email }}
+          git config user.name "${GIT_USER_NAME}"
+          git config user.email "${GIT_USER_EMAIL}"
 
-          git add preprocessing/final_weather_data.csv
+          git add preprocessing/*
 
-          git commit -m "Auto update: final_weather_data.csv [skip ci]" || echo "No changes to commit"
+          git commit -m "Auto update preprocessing results [skip ci]" || echo "No changes to commit"
 
-          git push
+          git pull --rebase origin main || echo "Rebase failed or nothing to update"
+
+          git push || echo "No new commits to push"
