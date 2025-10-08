@@ -33,8 +33,8 @@ jobs:
 
       - name: Commit and push updated dataset
         env:
-          GIT_USER_NAME: ${{ secrets.USERNAME }}
-          GIT_USER_EMAIL: ${{ secrets.EMAIL }}
+          GIT_USERNAME: ${{ secrets.USERNAME }}
+          GIT_EMAIL: ${{ secrets.EMAIL }}
         run: |
           git config user.name "${GIT_USERNAME}"
           git config user.email "${GIT_EMAIL}"
