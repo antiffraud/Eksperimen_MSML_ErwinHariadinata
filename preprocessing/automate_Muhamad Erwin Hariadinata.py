@@ -45,7 +45,6 @@ def load_and_preprocess_data():
     print(f"Features shape (X): {X.shape}")
     print(f"Target shape (y): {y.shape}")
 
-
     categorical_features = X.select_dtypes(include=['object']).columns.tolist()
     numerical_features = X.select_dtypes(include=['float64', 'int64']).columns.tolist()
     print(f"Categorical features for encoding: {categorical_features}")
@@ -70,14 +69,16 @@ def load_and_preprocess_data():
 
     return X_scaled, y_encoded, scaler, label_encoder, final_processed_df
 
-def save_preprocessed_data(df, output_dir='processed_data'):
-    os.makedirs(output_dir, exist_ok=True)
-    file_path = os.path.join(output_dir, 'final_weather_data.csv')
+
+def save_preprocessed_data(df):
+    file_path = os.path.join(os.getcwd(), 'final_weather_data.csv')
     df.to_csv(file_path, index=False)
     print(f"Final dataset disimpan ke {file_path}")
 
+
 if __name__ == "__main__":
     X, y, fitted_scaler, fitted_label_encoder, final_df = load_and_preprocess_data()
+    
     save_preprocessed_data(final_df)
     joblib.dump(fitted_scaler, 'scaler.pkl')
     joblib.dump(fitted_label_encoder, 'label_encoder.pkl')
